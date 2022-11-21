@@ -20,7 +20,7 @@ public class Input extends MouseAdapter{
         if(board.selectedPiece != null){
             board.selectedPiece.xPos = e.getX() - board.tileSize / 2;
             board.selectedPiece.yPos = e.getY() - board.tileSize / 2;
-
+            
             board.repaint();
         }
         
@@ -43,7 +43,7 @@ public class Input extends MouseAdapter{
         int col = e.getX() / board.tileSize;
         int row = e.getY() / board.tileSize;
 
-        if(selectedPiece != null){
+        if(board.selectedPiece != null){
             Move move = new Move(board, board.selectedPiece, col, row);
 
             if(board.isValidMove(move)){

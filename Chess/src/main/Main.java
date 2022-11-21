@@ -15,7 +15,5 @@ public class Main {
 
         frame.setTitle("Chess");
         frame.setVisible(true);
-
-        
     }
 }

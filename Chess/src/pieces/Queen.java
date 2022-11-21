@@ -20,4 +20,8 @@ public class Queen extends Piece{
 
         this.sprite = sheet.getSubimage(sheetScale, isWhite ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(board.tileSize, board.tileSize, BufferedImage.SCALE_SMOOTH);
     }
+
+    public boolean isValidMovement(int col, int row){
+        return(col == this.col || row == this.row || Math.abs(col - this.col) == Math.abs(row - this.row));
+    }
 }

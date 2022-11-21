@@ -21,4 +21,9 @@ public class Tower extends Piece{
 
         this.sprite = sheet.getSubimage(4 * sheetScale, isWhite ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(board.tileSize, board.tileSize, BufferedImage.SCALE_SMOOTH);
     }
+
+    public boolean isValidMovement(int col, int row){
+        //Horizontal or Vertical movement
+        return(col == this.col || row == this.row);
+    }
 }

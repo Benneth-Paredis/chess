@@ -23,4 +23,12 @@ public class Pawn extends Piece{
 
         this.sprite = sheet.getSubimage(5 * sheetScale, isWhite ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(board.tileSize, board.tileSize, BufferedImage.SCALE_SMOOTH);
     }
+
+    public boolean isValidMovement(int col, int row){
+        if(isWhite){
+            return(row == this.row - 1 && col - this.col == 0);
+        }else{
+            return(row == this.row + 1 && col - this.col == 0);
+        }
+    }
 }
