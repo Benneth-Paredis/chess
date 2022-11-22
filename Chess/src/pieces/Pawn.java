@@ -25,10 +25,21 @@ public class Pawn extends Piece{
     }
 
     public boolean isValidMovement(int col, int row){
-        if(isWhite){
-            return(row == this.row - 1 && col - this.col == 0);
-        }else{
-            return(row == this.row + 1 && col - this.col == 0);
-        }
+        int colorIndex = isWhite ? 1 : -1;
+
+        //Move pawn 1 space
+        if(this.col == col && row == this.row - colorIndex && board.getPiece(col, row) == null)
+            return true;
+
+        //Move pawn 2 spaces
+        if(isFirstMove && this.col == col && row == this.row - colorIndex * 2 && board.getPiece(col, row) == null && board.getPiece(col, row + colorIndex) == null)
+            return true;
+        //capture left
+        if(col == this.col - 1 && row == this.row - colorIndex && board.getPiece(col, row) != null)
+            return true;
+        //capture right
+        if(col == this.col + 1 && row == this.row - colorIndex && board.getPiece(col, row) != null)
+            return true;
+        return false;
     }
 }

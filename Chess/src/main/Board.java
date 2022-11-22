@@ -45,7 +45,6 @@ public class Board extends JPanel {
                 return piece;
             }
         }
-
         return null;
     }
 
@@ -56,6 +55,8 @@ public class Board extends JPanel {
         move.piece.xPos = move.newCol * tileSize;
         move.piece.yPos = move.newRow * tileSize;
 
+        move.piece.isFirstMove = false;
+
         capture(move);
     }
 
@@ -64,19 +65,21 @@ public class Board extends JPanel {
     }
 
     public boolean isValidMove(Move move){
-        
+        //checks if move is on another piece of the same color
         if(sameTeam(move.piece, move.capture)){
             return false;
         }
+        //checks if the piece can move in a certain manner according to the piece rule
         if(!move.piece.isValidMovement(move.newCol, move.newRow)){
             return false;
         }
+        //check if the piece collides with another
         if(move.piece.moveCollidesPiece(move.newCol, move.newRow)){
             return false;
         }
         return true;
     }
-
+    //checks if two piece are on the same team
     public boolean sameTeam(Piece piece1, Piece piece2){
         if(piece1 == null || piece2 == null)
         {
@@ -84,6 +87,12 @@ public class Board extends JPanel {
         }
         return piece1.isWhite == piece2.isWhite;
     }
+
+    //TODO
+    public void promotePiece(){
+
+    }
+
 
     public void addPieces(){
         //<====== KING WHITE ======>//
