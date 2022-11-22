@@ -19,8 +19,14 @@ public class Board extends JPanel {
 
     public int tileSize = 85;
 
-    int rows = 8;
     int cols = 8;
+    int rows = 8;
+
+    int boardWidth = cols * tileSize;
+    int boardHeight = rows * tileSize;
+
+    //turn white: 0, turn black: 1
+    int turn = 0;
 
     ArrayList<Piece> pieceList = new ArrayList<>();
 
@@ -28,8 +34,8 @@ public class Board extends JPanel {
 
     Input input = new Input(this);
 
-    public Board(){
-        this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
+    public Board(int x, int y){
+        this.setBounds(x, y, boardWidth, boardHeight);
         this.addMouseListener(input);
         this.addMouseMotionListener(input);
         addPieces();
@@ -58,27 +64,51 @@ public class Board extends JPanel {
         move.piece.isFirstMove = false;
 
         capture(move);
+
+        if(move.piece instanceof Pawn && move.piece.row == 0 || move.piece.row == 7){
+            promotePiece(move);
+        }
+
+        turn = (turn + 1) % 2;
     }
 
+    //Checks if it is the piece's turn
+    public boolean isTurn(Move move){
+        if(move.piece.isWhite && turn == 0){
+            return true;
+        }
+        if(!move.piece.isWhite && turn == 1){
+            return true;
+        }
+        return false;
+    }
+
+    //Looks if it can capture a piece and if so removes it from the piecelist
     public void capture(Move move){
         pieceList.remove(move.capture);
     }
 
+    //Checks if the move is a valid move
     public boolean isValidMove(Move move){
-        //checks if move is on another piece of the same color
-        if(sameTeam(move.piece, move.capture)){
-            return false;
+        //checks if its the piec's turn
+        if(isTurn(move)){
+            //checks if move is on another piece of the same color
+            if(sameTeam(move.piece, move.capture)){
+                return false;
+            }
+            //checks if the piece can move in a certain manner according to the piece rule
+            if(!move.piece.isValidMovement(move.newCol, move.newRow)){
+                return false;
+            }
+            //check if the piece collides with another
+            if(move.piece.moveCollidesPiece(move.newCol, move.newRow)){
+                return false;
+            }
+            return true;
         }
-        //checks if the piece can move in a certain manner according to the piece rule
-        if(!move.piece.isValidMovement(move.newCol, move.newRow)){
-            return false;
-        }
-        //check if the piece collides with another
-        if(move.piece.moveCollidesPiece(move.newCol, move.newRow)){
-            return false;
-        }
-        return true;
+        return false;
     }
+
     //checks if two piece are on the same team
     public boolean sameTeam(Piece piece1, Piece piece2){
         if(piece1 == null || piece2 == null)
@@ -88,9 +118,13 @@ public class Board extends JPanel {
         return piece1.isWhite == piece2.isWhite;
     }
 
-    //TODO
-    public void promotePiece(){
-
+    //Promotes piece to a queen
+    public void promotePiece(Move move){
+        boolean isWhite = move.piece.isWhite;
+        //remove current piece
+        pieceList.remove(move.piece);
+        //add queen to tile
+        pieceList.add(new Queen(this, move.newCol, move.newRow, isWhite));
     }
 
 
