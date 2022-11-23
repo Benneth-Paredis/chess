@@ -198,17 +198,20 @@ public class Board extends JPanel {
                 g2d.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
             }
         
+
+
         //Highlight places where the selected piece can go
         if(selectedPiece != null)
         for(int r = 0; r < rows; r++)
             for(int c = 0; c < cols; c++){
                 
                 if(isValidMove(new Move(this, selectedPiece, c, r))){
-                    g2d.setColor(new Color(0, 0, 255, 150));
-                    g2d.fillRect(c*tileSize, r*tileSize, tileSize, tileSize);
+                    g2d.setColor(new Color(0, 0, 0, 50));
+                    g2d.fillOval(c*tileSize + tileSize/4, r*tileSize + tileSize/4, tileSize/2, tileSize/2);
                 }
 
             }
+
         for(Piece piece : pieceList){
             piece.paint(g2d);
         }

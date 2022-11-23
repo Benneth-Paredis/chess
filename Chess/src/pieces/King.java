@@ -1,7 +1,6 @@
 package pieces;
 
 import main.Board;
-import pieces.Piece;
 
 import java.awt.image.BufferedImage;
 
