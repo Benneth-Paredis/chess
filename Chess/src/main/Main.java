@@ -9,6 +9,7 @@ public class Main {
         int screenWidth = (int)(screenSize.getWidth());
         int screenHeight = (int)(screenSize.getHeight());
 
+        //Size of the chessboard
         Dimension boardSize = new Dimension(8*85, 8*85);
 
         JFrame frame = new JFrame();

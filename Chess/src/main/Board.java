@@ -32,6 +32,9 @@ public class Board extends JPanel {
 
     public Piece selectedPiece;
 
+    public Piece kingWhite = new King(this, 4, 7, true);
+    public Piece kingBlack = new King(this, 4, 0, false);
+
     Input input = new Input(this);
 
     public Board(int x, int y){
@@ -127,14 +130,23 @@ public class Board extends JPanel {
         pieceList.add(new Queen(this, move.newCol, move.newRow, isWhite));
     }
 
+    //checks if the king can be captured
+    public boolean check(King king){
+        //Iterates through all chess pieces in pieceList and checks if they can capture the king
+        for(Piece piece : pieceList){
+            if(isValidMove(new Move(this, piece, king.col, king.row)))
+                return true;
+        }
+        return false;
+    }
 
     public void addPieces(){
         //<====== KING WHITE ======>//
-        pieceList.add(new King(this, 4, 7, true));
+        pieceList.add(kingWhite);
 
         //<====== KING BLACK ======>//        
 
-        pieceList.add(new King(this, 4, 0, false));
+        pieceList.add(kingBlack);
 
         //<====== QUEEN WHITE ======>//
         pieceList.add(new Queen(this, 3, 7, true));
