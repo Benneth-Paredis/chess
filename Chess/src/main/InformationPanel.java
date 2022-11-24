@@ -9,10 +9,14 @@ import java.awt.*;
 
 public class InformationPanel extends JPanel
 {
+    public JLabel score_white_label = new JLabel("Score: " + 0);
+    public JLabel score_black_label = new JLabel("Score: " + 0);
+
     public Color primaryColor = new Color(0, 0, 0);
     public Color secondaryColor = new Color(0, 0, 0);
     public Color backgroundColor = new Color(0, 125, 0);
 
+    public Board board;
 
     ImageIcon input_king_white = new ImageIcon(getClass().getResource("/res/king_white.png"));
     Image king_white_img = input_king_white.getImage();
@@ -27,14 +31,22 @@ public class InformationPanel extends JPanel
 
     public int infoPanelHeight = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.1);
 
-    public InformationPanel(int x, int y, int boardWidth)
+    public InformationPanel(Board board, int x, int y, int boardWidth)
     {
+        this.board = board;
+
         this.setBounds(x, y, boardWidth, infoPanelHeight);
         this.setBackground(backgroundColor);
 
         this.add(new JLabel(king_white));
-        this.add(new JLabel("Score:                                 "));
+        this.add(score_white_label);
         this.add(new JLabel(king_black));
-        this.add(new JLabel("Score:                  "));
+        this.add(score_black_label);
+    }
+
+    public void updatePanel(int scoreWhite, int scoreBlack)
+    {
+        score_white_label.setText("Score: " + scoreWhite);
+        score_black_label.setText("Score: " + scoreBlack);
     }
 }

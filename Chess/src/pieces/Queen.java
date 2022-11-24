@@ -16,7 +16,9 @@ public class Queen extends Piece{
 
         this.isWhite = isWhite;
 
-        this.name = "tower";
+        this.name = "Queen";
+
+        this.pieceValue = 9;
 
         this.sprite = sheet.getSubimage(sheetScale, isWhite ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(board.tileSize, board.tileSize, BufferedImage.SCALE_SMOOTH);
     }

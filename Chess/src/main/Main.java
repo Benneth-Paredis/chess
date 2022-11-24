@@ -18,14 +18,16 @@ public class Main {
         frame.setMinimumSize(screenSize);
         frame.setLocationRelativeTo(null);
 
-        InformationPanel informationPanel = new InformationPanel((int)((screenWidth / 2) - (boardSize.getWidth() / 2)), (int)(screenHeight*0.05), (int)(boardSize.getWidth()));
-        frame.add(informationPanel);
-
         Board board = new Board((screenWidth / 2) - (boardSize.width / 2), (screenHeight / 2) - (boardSize.height / 2));
         frame.add(board);
 
+        InformationPanel informationPanel = new InformationPanel(board, (int)((screenWidth / 2) - (boardSize.getWidth() / 2)), (int)(screenHeight*0.05), (int)(boardSize.getWidth()));
+        frame.add(informationPanel);
+
+        //Add the information panel to the board
+        board.informationPanel = informationPanel;
+
         frame.setTitle("Chess");
         frame.setVisible(true);
-
     }
 }

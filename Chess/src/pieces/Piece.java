@@ -12,9 +12,10 @@ public class Piece {
     public int col, row;
     public int xPos, yPos;
 
+    public int pieceValue;
+
     public boolean isWhite;
     public String name;
-    public int value;
 
     public boolean isFirstMove = true;
 

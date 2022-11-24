@@ -17,6 +17,8 @@ public class Board extends JPanel {
     public Color boardColorLightSquare = new Color(255, 255, 255);
     public Color boardColorDarkSquare = new Color(0, 125, 0);
 
+    public InformationPanel informationPanel;
+
     public int tileSize = 85;
 
     int cols = 8;
@@ -27,6 +29,10 @@ public class Board extends JPanel {
 
     //turn white: 0, turn black: 1
     int turn = 0;
+
+    //Scores players collected from capturing pieces
+    public int scoreWhite = 0;
+    public int scoreBlack = 0;
 
     ArrayList<Piece> pieceList = new ArrayList<>();
 
@@ -73,6 +79,8 @@ public class Board extends JPanel {
         }
 
         turn = (turn + 1) % 2;
+
+        informationPanel.updatePanel(scoreWhite, scoreBlack);
     }
 
     //Checks if it is the piece's turn
@@ -80,7 +88,7 @@ public class Board extends JPanel {
         if(move.piece.isWhite && turn == 0){
             return true;
         }
-        if(!move.piece.isWhite && turn == 1){
+        if((!move.piece.isWhite) && turn == 1){
             return true;
         }
         return false;
@@ -88,12 +96,23 @@ public class Board extends JPanel {
 
     //Looks if it can capture a piece and if so removes it from the piecelist
     public void capture(Move move){
+        if(move.capture != null)
+        {
+            if(move.capture.isWhite)
+            {
+                scoreBlack += move.capture.pieceValue;
+            }
+            else
+            {
+                scoreWhite += move.capture.pieceValue;
+            }
+        }
         pieceList.remove(move.capture);
     }
 
     //Checks if the move is a valid move
     public boolean isValidMove(Move move){
-        //checks if its the piec's turn
+        //checks if its the piece's turn
         if(isTurn(move)){
             //checks if move is on another piece of the same color
             if(sameTeam(move.piece, move.capture)){
