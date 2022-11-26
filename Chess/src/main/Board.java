@@ -38,8 +38,8 @@ public class Board extends JPanel {
 
     public Piece selectedPiece;
 
-    public Piece kingWhite = new King(this, 4, 7, true);
-    public Piece kingBlack = new King(this, 4, 0, false);
+    public King kingWhite = new King(this, 4, 7, true);
+    public King kingBlack = new King(this, 4, 0, false);
 
     Input input = new Input(this);
 
@@ -77,9 +77,6 @@ public class Board extends JPanel {
         if(move.piece instanceof Pawn && move.piece.row == 0 || move.piece.row == 7){
             promotePiece(move);
         }
-
-        turn = (turn + 1) % 2;
-
         informationPanel.updatePanel(scoreWhite, scoreBlack);
     }
 
@@ -151,10 +148,16 @@ public class Board extends JPanel {
 
     //checks if the king can be captured
     public boolean check(King king){
+        Move move;
         //Iterates through all chess pieces in pieceList and checks if they can capture the king
         for(Piece piece : pieceList){
-            if(isValidMove(new Move(this, piece, king.col, king.row)))
+            move = new Move(this, piece, king.col, king.row);
+            //Same as isValidMove function but without the isTurn function
+            if(!sameTeam(piece, king) && !(piece instanceof King) && piece.isValidMovement(move.newCol, move.newRow)
+            && !piece.moveCollidesPiece(move.newCol, move.newRow))
+            {
                 return true;
+            }
         }
         return false;
     }
