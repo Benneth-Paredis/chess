@@ -238,12 +238,19 @@ public class Board extends JPanel {
         if(selectedPiece != null)
         for(int r = 0; r < rows; r++)
             for(int c = 0; c < cols; c++){
-                
+                //grey highlighting the piece can move to that square
                 if(isValidMove(new Move(this, selectedPiece, c, r))){
-                    g2d.setColor(new Color(0, 0, 0, 50));
-                    g2d.fillOval(c*tileSize + tileSize/4, r*tileSize + tileSize/4, tileSize/2, tileSize/2);
+                    if(getPiece(c, r) == null){
+                        g2d.setColor(new Color(0, 0, 0, 50));
+                        g2d.fillOval(c*tileSize + tileSize/4, r*tileSize + tileSize/4, tileSize/2, tileSize/2);
+                    }
+                    //red highlighting if a piece can be captured
+                    if(getPiece(c, r) != null)
+                    {
+                        g2d.setColor(new Color(255, 0, 0, 50));
+                        g2d.fillOval(c*tileSize, r*tileSize, tileSize, tileSize);
+                    }
                 }
-
             }
 
         for(Piece piece : pieceList){
