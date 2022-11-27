@@ -58,6 +58,11 @@ public class Input extends MouseAdapter
                     if(board.check(board.kingWhite))
                     {
                         board.makeMove(new Move(board, board.selectedPiece, oldCol, oldRow));
+                        if(move.capture != null){
+                            board.pieceList.add(move.capture);
+                            board.scoreWhite -= move.capture.pieceValue;
+                        }
+                            
                         board.turn = (board.turn + 1) % 2;
                     }
                 }
@@ -66,6 +71,10 @@ public class Input extends MouseAdapter
                     if(board.check(board.kingBlack))
                     {
                         board.makeMove(new Move(board, board.selectedPiece, oldCol, oldRow));
+                        if(move.capture != null){
+                            board.pieceList.add(move.capture);
+                            board.scoreBlack -= move.capture.pieceValue;
+                        }
                         board.turn = (board.turn + 1) % 2;
                     }
                 }
@@ -79,6 +88,7 @@ public class Input extends MouseAdapter
             }
         } 
         board.selectedPiece = null;
+        board.informationPanel.updatePanel(board.scoreWhite, board.scoreBlack);
         board.repaint();
     }
 }

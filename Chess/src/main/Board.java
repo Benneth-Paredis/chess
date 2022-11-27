@@ -77,7 +77,6 @@ public class Board extends JPanel {
         if(move.piece instanceof Pawn && move.piece.row == 0 || move.piece.row == 7){
             promotePiece(move);
         }
-        informationPanel.updatePanel(scoreWhite, scoreBlack);
     }
 
     //Checks if it is the piece's turn
